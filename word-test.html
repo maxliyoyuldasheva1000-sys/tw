@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Microsoft Word — Test</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.q{margin-bottom:15px}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+<h2>📄 Microsoft Word — Test (25 savol)</h2>
+<p>Testni boshlash tugmasini bosing</p>
+
+<button class="btn" onclick="boshlash()">▶️ Testni boshlash</button>
+
+<div id="test" style="display:none"></div>
+
+<button class="btn" id="yakunBtn" onclick="yakunla()" style="display:none">
+✅ Testni yakunlash
+</button>
+
+<h3 id="ball"></h3>
+
+<a class="btn" href="word.html">⬅️ Word darslariga qaytish</a>
+
+<a class="btn" href="index.html">⬅️ Bosh menyuga qaytish</a>
+</div>
+
+<script>
+var savollar = [
+["Word nimaga mo‘ljallangan?","Matn yozish","Slayd","Hisoblash",0],
+["Ctrl + B nima qiladi?","Qalin","Saqlash","O‘chirish",0],
+["Ctrl + C nima qiladi?","Nusxa olish","Kesish","Joylash",0],
+["Ctrl + V nima qiladi?","Qo‘yish","Saqlash","Bosish",0],
+["Ctrl + X nima qiladi?","Kesish","Nusxa","Bekor",0],
+["Ctrl + Z nima qiladi?","Bekor qilish","Saqlash","Chop",0],
+["Ctrl + S nima qiladi?","Saqlash","O‘chirish","Bosma",0],
+["Ctrl + P nima qiladi?","Chop etish","Saqlash","Yopish",0],
+["Enter tugmasi nima qiladi?","Yangi qator","Saqlash","O‘chirish",0],
+["Caps Lock nima qiladi?","Katta harflar","Kichik harflar","O‘chirish",0],
+["Insert menyusi nima uchun?","Rasm va jadval qo‘shish","Tekshirish","Bosma",0],
+["Home menyusi nima?","Asosiy menyu","Chop","Ko‘rish",0],
+["Font nima?","Shrift","Rasm","Jadval",0],
+["Bold bu?","Qalin matn","Egri matn","O‘chirish",0],
+["Italic bu?","Egri matn","Qalin matn","O‘chirish",0],
+["Underline nima qiladi?","Ostiga chizadi","Qalin qiladi","Egri qiladi",0],
+["Paragraph nima?","Abzas","Sarlavha","Jadval",0],
+["Align Left nima?","Chapga tekislash","O‘ngga","Markazga",0],
+["Align Center nima?","Markazga tekislash","Chapga","O‘ngga",0],
+["Align Right nima?","O‘ngga tekislash","Chapga","Markazga",0],
+["Page Layout nima?","Sahifa sozlash","Matn yozish","Rasm",0],
+["Margin nima?","Bo‘sh joy","Shrift","Rasm",0],
+["Header nima?","Yuqori qism","Pastki qism","Matn",0],
+["Footer nima?","Pastki qism","Yuqori qism","Sarlavha",0],
+["Save As nima qiladi?","Boshqa nom bilan saqlash","O‘chirish","Yopish",0]
+];
+
+function boshlash(){
+  document.getElementById("test").style.display="block";
+  document.getElementById("yakunBtn").style.display="block";
+  chiqar();
+}
+
+function chiqar(){
+  var joy = document.getElementById("test");
+  joy.innerHTML = "";
+
+  for(var i=0;i<savollar.length;i++){
+    var s = savollar[i];
+    var html = "<div class='q'><b>"+(i+1)+". "+s[0]+"</b><br>";
+
+    for(var j=0;j<3;j++){
+      html += "<label><input type='radio' name='q"+i+"' value='"+j+"'> "+s[j+1]+"</label><br>";
+    }
+
+    html += "</div><hr>";
+    joy.innerHTML += html;
+  }
+}
+
+function yakunla(){
+  var togri = 0;
+
+  for(var i=0;i<savollar.length;i++){
+    var v = document.getElementsByName("q"+i);
+    for(var j=0;j<v.length;j++){
+      if(v[j].checked && parseInt(v[j].value) === savollar[i][4]){
+        togri++;
+      }
+    }
+  }
+
+  var status = "";
+  if(togri >= 15){
+    status = "<span style='color:#22c55e;font-weight:bold'>✅ O‘TDI</span>";
+  } else {
+    status = "<span style='color:#ef4444;font-weight:bold'>❌ YIQILDI</span>";
+  }
+
+  document.getElementById("ball").innerHTML =
+    "Natija: "+togri+" / "+savollar.length+"<br>"+status;
+}
+</script>
+
+</body>
+</html>

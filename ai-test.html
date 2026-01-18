@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI — Test (25 savol)</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.q{margin-bottom:15px}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+<h2>🤖 AI (Sun'iy Intellekt) — Test (25 savol)</h2>
+<p>Testni boshlash tugmasini bosing</p>
+
+<button class="btn" onclick="boshlash()">▶️ Testni boshlash</button>
+
+<div id="test" style="display:none"></div>
+
+<button class="btn" id="yakunBtn" onclick="yakunla()" style="display:none">
+✅ Testni yakunlash
+</button>
+
+<h3 id="ball"></h3>
+
+<a class="btn" href="ai.html">⬅️ AI darslariga qaytish</a>
+<a class="btn" href="index.html">⬅️ Bosh menyuga qaytish</a>
+
+</div>
+
+<script>
+var testParol = "AI123";
+// Savollar: [savol, javob1, javob2, javob3, togri_index]
+var savollar = [
+  ["AI nimani anglatadi?","Sun'iy Intellekt","Avtomatik Internet","Algoritmik Tizim",0],
+  ["Mashina o‘rganishi nima?","Ma'lumotlardan o‘rganish","Yangi kompyuter sotib olish","Dastur tuzmaslik",0],
+  ["AI kimga o‘xshash ishlaydi?","Inson fikrlashiga","Mashinaga","Raqamga",0],
+  ["Tillarni qayta ishlash nima?","Kompyuter tilni tushunishi","Kod yozmaslik","O‘yin yaratish",0],
+  ["Kompyuter ko‘rishi nima?","Tasvirlarni tahlil qilish","Fayllarni saqlash","Internet tezligini oshirish",0],
+  ["Chuqur o‘rganish nima?","Murakkab neyron tarmoqlar","Oddiy matematik hisoblash","Brauzer dasturi",0],
+  ["Avtonom tizimlar nima?","Mustaqil qaror qabul qiluvchi","Qo‘l bilan boshqariladigan","Fayl uzatuvchi",0],
+  ["AI qaysi sohada ishlatilmaydi?","Bog‘dorchilikda","Tibbiyotda","Moliyaviy xizmatlarda",0],
+  ["AI ning asosiy vazifasi nima?","Ma'lumotlarni qayta ishlash va qaror qabul qilish","Faqat ma'lumot saqlash","Matn yozish",0],
+  ["AI texnologiyalari nima uchun kerak?","Avtomatlashtirish va samaradorlik uchun","Faqat o‘yinlar uchun","Internetni almashtirish uchun",0],
+  ["Neyron tarmoqlar nima?","Biologik neyronlarga o‘xshash sun’iy tarmoqlar","Yangi kompyuter turkumlari","Dasturlash tillari",0],
+  ["Reinforcement learning nima?","Qarorlar qabul qilish orqali o‘rganish","Ma'lumotlarni saqlash","Statistik hisobot",0],
+  ["AI tizimlari qanday ma'lumotlar bilan ishlaydi?","Raqamli ma'lumotlar","Faqat matn","Faqat rasm",0],
+  ["Natural Language Processing so‘zi nimani anglatadi?","Tabiiy tilni qayta ishlash","Raqamli tarmoqlar","Kompyuter grafikasi",0],
+  ["AI dasturlarida ishlatiladigan dasturlash tili qaysi?","Python","HTML","CSS",0],
+  ["AI uchun eng muhim resurs nima?","Ma'lumotlar (Data)","Dizayn","Matn yozish",0],
+  ["Supervised learning nima?","Kirish ma'lumotlari va javoblari bilan o‘rganish","Faqat ma'lumotni yig‘ish","Natijalarni tasodifiy tanlash",0],
+  ["Unsupervised learning nima?","Ma'lumotlarni o‘z-o‘zidan tahlil qilish","Ma'lumotlarni qo‘lda o‘rganish","Natijalarni e’lon qilish",0],
+  ["AI nima uchun inson yordamida mashq qilinadi?","To‘g‘ri javoblarni o‘rganish uchun","Faqat kod yozish uchun","Faqat matematik hisoblash uchun",0],
+  ["Deep learning qaysi usulga tegishli?","Chuqur neyron tarmoqlar","Oddiy statistik usullar","Matematik tenglamalar",0],
+  ["AI qaysi sohada qo‘llaniladi?","Tibbiyot, moliya, sanoat","Faqat o‘yinlarda","Faqat ijtimoiy tarmoqlarda",0],
+  ["AI asosida nima ishlaydi?","Algoritmlar va ma'lumotlar","Faqat kompyuter apparati","Faqat internet tezligi",0],
+  ["AI ning bosh maqsadi nima?","Insonning aqliy qobiliyatlarini taqlid qilish","Faqat dastur yaratish","Faqat fayllarni saqlash",0],
+  ["Chatbot nima?","AI asosida ishlaydigan suhbatdosh dastur","Odamlar uchun o‘yin","Matn muharriri",0],
+  ["AI tizimlari qanday qilib yaxshilanadi?","Ko‘proq ma'lumot va trening orqali","Faqat dastur yangilash bilan","Internet tezligini oshirish bilan",0]
+];
+
+// Tasodifiy aralashtirish funksiyasi
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function boshlash(){
+  document.getElementById("test").style.display="block";
+  document.getElementById("yakunBtn").style.display="block";
+  document.getElementById("ball").innerHTML = "";
+  chiqar();
+}
+
+function chiqar(){
+  var joy=document.getElementById("test");
+  joy.innerHTML="";
+  for(var i=0;i<savollar.length;i++){
+    var s=savollar[i];
+
+    // Javoblarni shuffle qilish, tog'ri javob indeksini saqlash
+    var javoblar = [
+      {text: s[1], correct: s[4] === 0},
+      {text: s[2], correct: s[4] === 1},
+      {text: s[3], correct: s[4] === 2}
+    ];
+    shuffle(javoblar);
+
+    var html="<div class='q'><b>"+(i+1)+". "+s[0]+"</b><br>";
+    for(var j=0;j<javoblar.length;j++){
+      html+="<label><input type='radio' name='q"+i+"' value='"+(javoblar[j].correct ? 1 : 0)+"'> "+javoblar[j].text+"</label><br>";
+    }
+    html+="</div><hr>";
+    joy.innerHTML+=html;
+  }
+}
+
+function yakunla(){
+  var togri=0;
+  for(var i=0;i<savollar.length;i++){
+    var v=document.getElementsByName("q"+i);
+    for(var j=0;j<v.length;j++){
+      if(v[j].checked && parseInt(v[j].value)===1){
+        togri++;
+      }
+    }
+  }
+  document.getElementById("ball").innerHTML =
+    "Natija: "+togri+" / "+savollar.length;
+}
+</script>
+
+</body>
+</html>

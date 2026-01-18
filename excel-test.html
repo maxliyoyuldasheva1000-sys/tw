@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Microsoft Excel — Test</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.q{margin-bottom:15px}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+<h2>📊 Microsoft Excel — Test (25 savol)</h2>
+<p>Testni boshlash tugmasini bosing</p>
+
+<button class="btn" onclick="boshlash()">▶️ Testni boshlash</button>
+
+<div id="test" style="display:none"></div>
+
+<button class="btn" id="yakunBtn" onclick="yakunla()" style="display:none">
+✅ Testni yakunlash
+</button>
+
+<h3 id="ball"></h3>
+
+<a class="btn" href="excel.html">⬅️ Excel darslariga qaytish</a>
+
+<a class="btn" href="index.html">⬅️ Bosh menyuga qaytish</a>
+</div>
+
+<script>
+var savollar = [
+["Excel nimaga mo‘ljallangan?","Hisob-kitob","Matn yozish","Slayd",0],
+["Excel fayli nima deb ataladi?","Workbook","Document","Slide",0],
+["Katakcha kesishmasi nima?","Cell","Row","Column",0],
+["Ustun nima?","Column","Row","Cell",0],
+["Qator nima?","Row","Column","Sheet",0],
+["= belgisi nimani bildiradi?","Formula boshlanishi","Matn","Saqlash",0],
+["SUM funksiyasi nima qiladi?","Yig‘adi","Ayiradi","Ko‘paytiradi",0],
+["AVERAGE funksiyasi nima?","O‘rtacha qiymat","Eng katta","Yig‘indi",0],
+["MAX funksiyasi nima qiladi?","Eng katta sonni topadi","Eng kichik","O‘rtacha",0],
+["MIN funksiyasi nima qiladi?","Eng kichik sonni topadi","Eng katta","Yig‘indi",0],
+["Ctrl + C nima qiladi?","Nusxa oladi","Kesadi","Joylaydi",0],
+["Ctrl + V nima qiladi?","Qo‘yadi","Saqlaydi","Bekor qiladi",0],
+["Ctrl + X nima qiladi?","Kesadi","Nusxa","Saqlaydi",0],
+["Ctrl + Z nima qiladi?","Bekor qiladi","Saqlaydi","Chop etadi",0],
+["Sheet nima?","Varaq","Katak","Ustun",0],
+["Formula qayerda yoziladi?","Formula panelda","Pastda","Yonida",0],
+["AutoFill nima qiladi?","Avto to‘ldiradi","O‘chiradi","Bosadi",0],
+["Filter nima qiladi?","Saralaydi","Yozadi","O‘chiradi",0],
+["Sort nima qiladi?","Tartiblaydi","Yig‘adi","Chop etadi",0],
+["Chart nima?","Diagramma","Jadval","Matn",0],
+["Freeze Panes nima?","Qotirib qo‘yadi","O‘chiradi","Yashiradi",0],
+["Merge Cells nima qiladi?","Birlashtiradi","Ajratadi","O‘chiradi",0],
+["Wrap Text nima qiladi?","Matnni sig‘diradi","Qalin qiladi","O‘chiradi",0],
+["Page Layout nima?","Sahifa sozlash","Hisoblash","Matn",0],
+["Save As nima qiladi?","Boshqa nom bilan saqlaydi","Yopadi","O‘chiradi",0]
+];
+
+function boshlash(){
+  document.getElementById("test").style.display="block";
+  document.getElementById("yakunBtn").style.display="block";
+  chiqar();
+}
+
+function chiqar(){
+  var joy=document.getElementById("test");
+  joy.innerHTML="";
+  for(var i=0;i<savollar.length;i++){
+    var s=savollar[i];
+    var html="<div class='q'><b>"+(i+1)+". "+s[0]+"</b><br>";
+    for(var j=0;j<3;j++){
+      html+="<label><input type='radio' name='q"+i+"' value='"+j+"'> "+s[j+1]+"</label><br>";
+    }
+    html+="</div><hr>";
+    joy.innerHTML+=html;
+  }
+}
+
+function yakunla(){
+  var togri=0;
+  for(var i=0;i<savollar.length;i++){
+    var v=document.getElementsByName("q"+i);
+    for(var j=0;j<v.length;j++){
+      if(v[j].checked && parseInt(v[j].value)===savollar[i][4]){
+        togri++;
+      }
+    }
+  }
+  document.getElementById("ball").innerHTML =
+    "Natija: "+togri+" / "+savollar.length;
+}
+</script>
+
+</body>
+</html>

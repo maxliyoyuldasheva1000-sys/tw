@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>IT Savodxonligi AI</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<input id="t" placeholder="Savol yozing yoki 🎤 bosing" style="width:70%">
+<button onclick="sendText()">Yubor</button>
+<button onclick="startVoice()">🎤</button>
+
+<p id="a"></p>
+
+<script>
+const SERVER = "https://ai-server-6-72o2.onrender.com/ai";
+let isVoice = false; // 🔑 MUHIM FLAG
+
+// ===== MATN BILAN YUBORISH =====
+function sendText(){
+  isVoice = false; // matn rejim
+  send();
+}
+
+// ===== UMUMIY YUBORISH =====
+function send(){
+  const text = document.getElementById("t").value.trim();
+  if(!text) return;
+
+  document.getElementById("a").innerText = "Kutilyapti...";
+
+  fetch(SERVER,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ text })
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    document.getElementById("a").innerText = d.answer;
+
+    // 🔊 FAQAT OVOZ BILAN SO‘RALGANDA GAPIRADI
+    if(isVoice){
+      speak(d.answer);
+    }
+  })
+  .catch(()=>{
+    document.getElementById("a").innerText="Xato";
+  });
+}
+
+// ===== OVOZ BILAN SO‘RASH =====
+function startVoice(){
+  isVoice = true; // ovoz rejim
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert("Chrome/Edge oching"); return; }
+
+  const rec = new SR();
+  rec.lang = "ru-RU";
+  rec.onresult = e=>{
+    document.getElementById("t").value = e.results[0][0].transcript;
+    send();
+  };
+  rec.start();
+}
+
+// ===== OVOZLI JAVOB =====
+function speak(text){
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "ru-RU";
+  speechSynthesis.speak(u);
+}
+</script>
+
+<input id="t" placeholder="Savol yozing yoki 🎤 bosing" style="width:50%">
+      <button onclick="sendText()">Yubor</button>
+      <button onclick="startVoice()">🎤</button>
+</body>
+</html>

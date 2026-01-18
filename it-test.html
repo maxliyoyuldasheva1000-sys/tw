@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>IT — Test</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.q{margin-bottom:15px}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+<h2>💻 IT (Axborot texnologiyalari) — Test (25 savol)</h2>
+<p>Testni boshlash tugmasini bosing</p>
+
+<button class="btn" onclick="boshlash()">▶️ Testni boshlash</button>
+
+<div id="test" style="display:none"></div>
+
+<button class="btn" id="yakunBtn" onclick="yakunla()" style="display:none">
+✅ Testni yakunlash
+</button>
+
+<h3 id="ball"></h3>
+
+<a class="btn" href="it.html">⬅️ IT darslariga qaytish</a>
+<a class="btn" href="index.html">⬅️ Bosh menyuga qaytish</a>
+
+</div>
+
+<script>
+// Savollar: [savol, javob1, javob2, javob3, togri_index]
+var savollar = [
+  ["IT nimani anglatadi?","Information Technology","Internet Texnika","Individual Technology",0],
+  ["IT sohasiga nimalar kiradi?","Kompyuter, internet va dasturlar","Televizor","Daftar",0],
+  ["Dasturchi kim?","Dastur va ilova yozuvchi","Kompyuter sotuvchi","O‘qituvchi",0],
+  ["Frontend nima?","Sayt ko‘rinishi","Server","Ma’lumotlar bazasi",0],
+  ["Frontend tillari qaysilar?","HTML, CSS, JavaScript","Python, Java","PHP, MySQL",0],
+  ["Backend nima?","Sayt ichki ishlashi","Ranglar","Dizayn",0],
+  ["Backend tillari qaysilar?","Python, PHP, Java","HTML, CSS","Figma",0],
+  ["Mobile dasturlash nima uchun?","Android va iOS ilovalar","Sayt dizayni","Matn yozish",0],
+  ["Design yo‘nalishi nimani o‘rganadi?","Dizayn va maketlar","Kod yozish","Server sozlash",0],
+  ["HTML nima?","Saytning asosiy tuzilmasi","Rang berish","O‘yin",0],
+  ["CSS nima vazifa bajaradi?","Rang va dizayn","Hisoblash","Ma’lumot saqlash",0],
+  ["JavaScript nima uchun kerak?","Tugma va harakatlar","Faqat dizayn","Matn yozish",0],
+  ["Python qanday til?","Oson va kuchli","Qiyin","Keraksiz",0],
+  ["Qaysi biri IT mahsuloti?","Kalkulyator dasturi","Qalam","Daftar",0],
+  ["Telegram bot bu —","Avtomatik ishlovchi dastur","O‘yin","Brauzer",0],
+  ["IT nimaga kerak?","Kasb o‘rganish","Vaqt yo‘qotish","Faqat o‘yin",0],
+  ["IT orqali nima topish mumkin?","Daromad","Muammo","Charchoq",0],
+  ["Qaysi biri frontendga kirmaydi?","Python","HTML","CSS",0],
+  ["Sayt dizayni qaysi yo‘nalish?","Design","Backend","Mobile",0],
+  ["Backend qayerda ishlaydi?","Ichki tizimda","Dizaynda","Ranglarda",0],
+  ["Qaysi biri mobil ilova?","Telegram","Paint","Word",0],
+  ["Dasturlash nima?","Kod yozish","Rasm chizish","Video ko‘rish",0],
+  ["HTML va CSS birga nima yaratadi?","Sayt ko‘rinishi","Server","O‘yin",0],
+  ["JavaScript bo‘lmasa nima bo‘ladi?","Sayt harakatsiz bo‘ladi","Internet yo‘qoladi","Kompyuter o‘chadi",0],
+  ["IT o‘rganish kimlar uchun?","Hamma uchun","Faqat kattalar","Faqat bolalar",0]
+];
+
+// Tasodifiy aralashtirish funksiyasi
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function boshlash(){
+  document.getElementById("test").style.display="block";
+  document.getElementById("yakunBtn").style.display="block";
+  chiqar();
+}
+
+function chiqar(){
+  var joy=document.getElementById("test");
+  joy.innerHTML="";
+  for(var i=0;i<savollar.length;i++){
+    var s=savollar[i];
+
+    // Javoblarni shuffle qilish, tog'ri javob indeksini saqlash
+    var javoblar = [
+      {text: s[1], correct: s[4] === 0},
+      {text: s[2], correct: s[4] === 1},
+      {text: s[3], correct: s[4] === 2}
+    ];
+    shuffle(javoblar);
+
+    var html="<div class='q'><b>"+(i+1)+". "+s[0]+"</b><br>";
+    for(var j=0;j<javoblar.length;j++){
+      html+="<label><input type='radio' name='q"+i+"' value='"+(javoblar[j].correct ? 1 : 0)+"'> "+javoblar[j].text+"</label><br>";
+    }
+    html+="</div><hr>";
+    joy.innerHTML+=html;
+  }
+}
+
+function yakunla(){
+  var togri=0;
+  for(var i=0;i<savollar.length;i++){
+    var v=document.getElementsByName("q"+i);
+    for(var j=0;j<v.length;j++){
+      if(v[j].checked && parseInt(v[j].value)===1){
+        togri++;
+      }
+    }
+  }
+  document.getElementById("ball").innerHTML =
+    "Natija: "+togri+" / "+savollar.length;
+}
+</script>
+
+
+</body>
+</html>

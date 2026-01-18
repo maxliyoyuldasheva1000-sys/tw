@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PowerPoint — Test</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.q{margin-bottom:15px}
+</style>
+</head>
+
+<body>
+<div class="card">
+
+<h2>📊 PowerPoint testi (25 savol)</h2>
+<p>Testni boshlash tugmasini bosing</p>
+
+<button class="btn" onclick="boshlash()">▶️ Testni boshlash</button>
+
+<div id="test" style="display:none"></div>
+
+<button class="btn" id="yakunBtn" onclick="yakunla()" style="display:none">
+✅ Testni yakunlash
+</button>
+
+<h3 id="ball"></h3>
+
+<a class="btn" href="powerpoint.html">⬅️ PowerPoint darslariga qaytish</a>
+
+<a class="btn" href="index.html">⬅️ Bosh menyuga qaytish</a>
+</div>
+
+<script>
+var savollar = [
+["PowerPoint nimaga mo‘ljallangan?","Taqdimot","Hisob-kitob","Matn",0],
+["PowerPoint fayli nima?","Presentation","Workbook","Document",0],
+["Slayd nima?","Sahifa","Jadval","Katak",0],
+["New Slide nima qiladi?","Yangi slayd","Saqlash","O‘chirish",0],
+["Design bo‘limi nima uchun?","Dizayn","Matn","Hisob",0],
+["Animation nima?","Harakat","Matn","Rasm",0],
+["Transition nima?","Slayd o‘tishi","Rasm","Matn",0],
+["Slide Show nima?","Namoyish","Tahrir","Saqlash",0],
+["Ctrl + M nima?","Yangi slayd","Saqlash","Chop",0],
+["Ctrl + S nima?","Saqlash","Yopish","O‘chirish",0],
+["Ctrl + P nima?","Chop","Saqlash","Yopish",0],
+["Layout nima?","Joylashuv","Shrift","Rang",0],
+["Theme nima?","Mavzu","Matn","Jadval",0],
+["Insert bo‘limi nima?","Qo‘shish","O‘chirish","Saqlash",0],
+["Picture nima?","Rasm","Matn","Video",0],
+["Video nima?","Video","Rasm","Jadval",0],
+["Chart nima?","Diagramma","Matn","Rasm",0],
+["Table nima?","Jadval","Rasm","Video",0],
+["Text Box nima?","Matn maydoni","Rasm","Slayd",0],
+["Notes nima?","Izoh","Rasm","Matn",0],
+["Slide Master nima?","Umumiy dizayn","Rasm","Matn",0],
+["Export nima?","Chiqarish","O‘chirish","Saqlash",0],
+["PDF nima?","Format","Rasm","Matn",0],
+["Presentation qayerda ko‘rsatiladi?","Ekran","Printer","Disk",0],
+["Save As nima?","Boshqa nom bilan","O‘chirish","Yopish",0]
+];
+
+function boshlash(){
+  document.getElementById("test").style.display="block";
+  document.getElementById("yakunBtn").style.display="block";
+  chiqar();
+}
+
+function chiqar(){
+  var joy=document.getElementById("test");
+  joy.innerHTML="";
+  for(var i=0;i<savollar.length;i++){
+    var s=savollar[i];
+    var html="<div class='q'><b>"+(i+1)+". "+s[0]+"</b><br>";
+    for(var j=0;j<3;j++){
+      html+="<label><input type='radio' name='q"+i+"' value='"+j+"'> "+s[j+1]+"</label><br>";
+    }
+    html+="</div><hr>";
+    joy.innerHTML+=html;
+  }
+}
+
+function yakunla(){
+  var togri=0;
+  for(var i=0;i<savollar.length;i++){
+    var v=document.getElementsByName("q"+i);
+    for(var j=0;j<v.length;j++){
+      if(v[j].checked && parseInt(v[j].value)===savollar[i][4]){
+        togri++;
+      }
+    }
+  }
+  document.getElementById("ball").innerHTML =
+    "Natija: "+togri+" / "+savollar.length;
+}
+</script>
+
+</body>
+</html>

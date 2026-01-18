@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>IT Savodxonlik</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="photo_2026-01-14_16-59-17.jpg">
+</head>
+<body>
+  <div class="logo-box">
+    
+      
+        <div class="chat-wrapper">
+  <div class="chat-box">
+    <div class="input-area">
+      <input id="t" placeholder="Savol yozing yoki 🎤 bosing">
+      <div class="buttons">
+        <button onclick="sendText()">Yubor</button>
+        <button onclick="startVoice()">🎤</button>
+      </div>
+    </div>
+
+    <div class="answer-area">
+      <p id="a">Javob shu yerda chiqadi...</p>
+    </div>
+  </div>
+</div>
+      
+      
+      
+
+      <p id="a"></p>
+  </div>
+  
+    <div class="card">
+  <h1>📘 IT & Kompyuter Savodxonligi</h1>
+
+  <a class="btn" href="compyuter.html">🖥 Kompyuter Savodxonligi</a>
+  <a class="btn" href="it.html">💡 IT Asoslari</a>
+  <a class="btn" href="testlar.html">📄 Testlar</a>
+
+
+  <hr style="margin:20px 0;border-color:#1e293b">
+
+  <!-- 🤝 HAMKORLAR UCHUN -->
+  <div class="info hamkor">
+    🤝 <b>Hamkorlar uchun</b><br>
+    IT kurslar, maktablar va o‘quv markazlari bilan hamkorlikka ochiqmiz.
+    <br><br>
+
+    <a class="btn hamkor-btn" href="tel:+998998520895">
+      📞 Telefon: +998 99 852 08 95
+    </a>
+
+    <a class="btn hamkor-btn email" href="https://t.me/O1ybe" target="_blank">
+      ✈️ Telegram: @O1ybe
+    </a>
+
+    <a class="btn hamkor-btn instagram" href="https://www.instagram.com/O1ybe" target="_blank">
+  📸 Instagram
+</a>
+
+
+  </div>
+  
+
+</div>
+  
+    <a class="btn hamkor-btn" href="" target="_blank" style="width:20%">
+      👨‍💻 Yaratuvchi: Mirkomilov Mirodil
+      </a>
+  
+
+ <!-- card yopildi -->
+  
+
+<script>
+const SERVER = "https://ai-server-6-72o2.onrender.com/ai";
+let isVoice = false; 
+
+function sendText(){
+  isVoice = false; 
+  send();
+}
+
+function send(){
+  const text = document.getElementById("t").value.trim();
+  if(!text) return;
+
+  const answerEl = document.getElementById("a");
+  answerEl.innerText = "Kutilyapti...";
+
+  fetch(SERVER,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ text })
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    answerEl.innerText = d.answer;
+    if(isVoice){ speak(d.answer); }
+  })
+  .catch(()=>{
+    answerEl.innerText="Xato";
+  });
+}
+
+function startVoice(){
+  isVoice = true; 
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){ alert("Chrome yoki Edge oching"); return; }
+
+  const rec = new SR();
+  rec.lang = "ru-RU";
+  rec.onresult = e=>{
+    document.getElementById("t").value = e.results[0][0].transcript;
+    send();
+  };
+  rec.start();
+}
+
+function speak(text){
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "ru-RU";
+  speechSynthesis.speak(u);
+}
+</script>
+
+</body>
+</html>
